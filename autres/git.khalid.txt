@@ -1,0 +1,19 @@
+utilisation git et github
+
+explication gitbash:
+	-pwd : savoir dans quel chemin on est
+	-cd : aller dans le dossier ( exemple cd onedrive, cd bureau " ca nous met sur le bureau " 
+	-mkdir: creation de dossier ( exemple je suis acuellement sur le bureau si je fais mkdir github
+ca va me creer le dossier github sur le bureau.
+	-ls: liste le dossier courant pour voir ce quil y a dedans
+	-touch : pour creé un fichier ( touch index.html fichier htmtl creer dans le dossier github.
+	-cd .. : cest pour revenir en arriere dans notre cheminls
+
+versionner en local:
+	-apres avoir fini le projet faire un git add . ajoute toute les modification( en gros il met a jour le projet dans une fil dattente avant denvoyer le projet )
+	-git status pour verifier ce quon s'est ajouté ( verification du dossier en gros )
+	-git commit -m sauvegarde reelement dans un fichier commit
+
+recuperation modification ripo:
+	-faire un git pull
+	

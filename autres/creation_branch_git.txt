@@ -1,0 +1,5 @@
+creation d'une branche pour un projet:
+
+il faut faire git branch est le nom de la branche deriere
+
+faire git branch pour voir toute les branche

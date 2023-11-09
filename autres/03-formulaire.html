@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="http://www.google.com" method="get" target="_blank">
+        <label for="search">votre recherche</label>
+        <!--"for" uniquement pour les ID-->
+        <input type=" text" name="q" id="search" placeholder="votre recherche" required autofocus>
+        <input type="submit" value="rechercher">
+    </form>
+    <form action="">
+        <label for="birthday">Date de naissance</label>
+        <input type="date" name="birthday" id="birthday" disabled> 
+        <br>
+
+        <label for="color">couleur favorite :</label>
+        <input type="color" name="color" id="color">
+        <br>
+
+        <label for="email">votre email</label>
+        <input type="email" name="email" id="email">
+        <br>
+
+        <label for="pass">votre mot de passe :</label>
+        <input type="password" name="pass" id="pass">
+        <br>
+
+        <label for="CV">votre CV :</label>
+        <input type="file" name="CV" id="CV" multiple>
+        <br>
+
+        <label for="commentaire">Un commentaire peut etre</label>
+        <textarea name="commentaire" id="commentaire"
+        cols="30" rows="10"></textarea>
+        <br>
+
+        <fieldset>
+            <legend>choisi ton language prefere</legend>
+            <input type="radio" name="language" id="HTML" value="HTML">
+            <label for="HTML">HTML</label>
+            <br>
+            <input type="radio" name="language" id="CSS" value="CSS">
+            <label for="CSS">CSS</label>
+            <br>
+            <input type="radio" name="language" id="JS" value="JS" checked>
+            <label for="JS">Javascript</label>
+            <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Quels categories appreciez vous ?</legend>
+            <input type="checkbox" name="aventure" id="aventure"
+            value="av" checked>
+            <label for="aventure">aventure</label>
+            <br>
+            <input type="checkbox" name="romantique" id="romantique"
+            value="ro" checked>
+            <label for="romantique">romantique</label>
+            <br>
+            <input type="checkbox" name="horreur" id="horreur"
+            value="ho" checked>
+            <label for="horreur">horreur</label>
+            <br>
+            
+        </fieldset>
+        <fieldset>
+            <label for="repas">choisi ton repas:</label>
+            <select name="repas" id="repas" multiple>
+                <option disabled selected>Choisir ton repas</option>
+                <option value="pizza">pizza</option>
+                <option value="burger">burger</option>
+                <option value="pasta">pasta</option>
+                
+
+            </select>
+            <br>
+            <button type="submit">Envoyer</button>
+            <input type="button" value="coucou">
+    </form>
+
+    <di></di>
+</body>
+</html>
