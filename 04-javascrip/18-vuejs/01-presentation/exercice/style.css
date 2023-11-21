@@ -1,0 +1,63 @@
+#app {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.title-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.table td button {
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.table td button.modifier {
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+}
+
+.table td button.supprimer {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+form input {
+    flex-grow: 2;
+    padding: 8px;
+}
+
+form button {
+    flex-shrink: 0;
+    padding: 8px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

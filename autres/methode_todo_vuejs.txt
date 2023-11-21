@@ -1,0 +1,84 @@
+````js
+"use strict";
+const app = Vue.createApp({
+    data() {
+      return {
+        todos: [], // mettre toutes les taches
+        newTodo: "", // récupérer la nouvelle tache
+        editIndex: -1, // -1 mode 'ajout'
+        storage_key: 'vue-js-3-todo',
+        checked: "false",
+        index: -1,
+      };
+    },
+    methods: {
+      
+      addTodo() {console.log(this.todos);
+        if (this.newTodo.trim() !== "") {
+        const updateTodos = [...this.todos];
+          if(this.editIndex != -1){ // mode modification
+                updateTodos[this.editIndex] = {
+                    text: this.newTodo,
+                    completed: updateTodos[this.editIndex].completed,
+                    checked: this.checked,
+                };
+                this.todos = updateTodos;
+                this.editIndex= -1;
+                }else{ // mode ajout
+                    this.todos.push({
+                    text: this.newTodo,
+                    completed: false,
+                    checked: this.checked,
+                });
+            }
+            this.saveTodos();
+            this.newTodo="";
+            }
+      },
+      removeTodo(index){
+        if(confirm("Voulez vous supprimer la tache ?")==true){
+            this.todos.splice(index,1);
+            this.saveTodos();  
+        }
+         
+      },
+      editTodo(index){
+          this.editIndex = index;
+          this.newTodo = this.todos[index].text;
+      },
+      toggleComplete(index){
+      if(index >=0 && index < this.todos.length){
+        const updateTodos = [...this.todos];
+        if(!this.todos[index].checked){
+            updateTodos[index] = {
+                text: this.todos[index].text,
+                completed: true,
+                checked: true,
+            }
+        }else{
+            updateTodos[index] = {
+                text: this.todos[index].text,
+                completed: false,
+                checked: false,
+          }
+        }
+        this.todos = updateTodos;
+        this.saveTodos();
+        }
+    },
+    loadTodos(){
+        const varTodo = localStorage.getItem(this.storage_key);
+        if(varTodo){
+            this.todos = JSON.parse(varTodo);
+        }
+    },
+    saveTodos(){
+        localStorage.setItem(this.storage_key, JSON.stringify(this.todos));
+    },
+  },
+  mounted() {
+    this.loadTodos();
+  },
+  });
+  
+  app.mount("#app");````

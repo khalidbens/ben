@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Exercice Vue.js</title>
+</head>
+<body>
+
+    <div id="app">
+        <div class="title-container">
+            <h1>Exercice Todo List</h1>
+        </div>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tâche</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr v-for="tache in taches" :key="tache.id">
+                    <td>{{ tache.nom }}</td>
+                    <td>
+                        <button class="modifier" @click="modifierTache(tache)">Modifier</button>
+                        <button class="supprimer" @click="supprimerTache(tache.id)">Supprimer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form @submit.prevent="gererTache">
+            <input v-model="nouvelleTache" placeholder="Nouvelle tâche" />
+            <button type="submit">{{ tacheSelectionnee ? 'Modifier' : 'Ajouter' }}</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        
+        const { createApp } = Vue;
+
+const app = createApp({
+    data() {
+        return {
+            message: "Ma Liste de Tâches",
+            taches: [],
+            nouvelleTache: "",
+            tacheSelectionnee: null
+        };
+    },
+    methods: {
+        gererTache() {
+            if (this.tacheSelectionnee) {
+                // Modifier la tâche sélectionnée
+                this.tacheSelectionnee.nom = this.nouvelleTache;
+                this.nouvelleTache = "";
+                this.tacheSelectionnee = null;
+            } else {
+                // Ajouter une nouvelle tâche
+                if (this.nouvelleTache.trim() !== "") {
+                    this.taches.push({ id: Date.now(), nom: this.nouvelleTache });
+                    this.nouvelleTache = "";
+                }
+            }
+            // Sauvegarder les tâches dans le localStorage
+            localStorage.setItem("taches", JSON.stringify(this.taches));
+        },
+        modifierTache(tache) {
+            this.tacheSelectionnee = tache;
+            this.nouvelleTache = tache.nom;
+        },
+        supprimerTache(idTache) {
+            this.taches = this.taches.filter(tache => tache.id !== idTache);
+        }
+    },
+    mounted() {
+        const savedTaches = localStorage.getItem("taches");
+        if (savedTaches) {
+            this.taches = JSON.parse(savedTaches);
+        }
+    }
+}).mount('#app');
+    </script>
+</body>
+</html>

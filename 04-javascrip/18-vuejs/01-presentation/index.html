@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue js3</title>
+</head>
+<body>
+
+    <div id="app">
+        {{ titre }} <!-- Affiche le titre en majuscule -->
+
+        <!-- il faut imperativement indiquer l'attribut v-bind ou ":" pour afficher du contenu -->
+        <!-- <img v-bind:src="image" alt="image">
+        <img :src="image" alt="image">  -->
+
+        <!-- on peut aussi utiliser des conditions -->
+        <!-- <p v-if="inStock>=3"> En stock{{ inStock }}</p>
+        <p v-else="inStock<3"> Rupture de stock {{ inStock }}</p> -->
+
+        <!-- Afficher ou masquer du contenu -->
+        <!-- <p v-show="inStock"> En stock</p> -->
+
+        <!-- suivre un model -->
+        <!-- <input type="text" v-model="model" class="list" />{{ model }} -->
+
+        <!-- logique conditionnel chainéé -->
+        <!-- <p v-if="inventaire > 10"> en stock {{inventaire}}</p>
+        <p v-else-if="inventaire <=10 && inventaire > 2"> preque en rupture{{inventaire}}</p>
+        <p v-else> en rupture{{inventaire}}</p> -->
+
+        <!-- rendu de liste -->
+        <!-- <ul>
+            <li v-for="detail in details">{{detail}}</li>
+        </ul> -->
+
+        <!-- variante de rendu de liste -->
+
+        <!-- <ul> -->
+            <!-- dans un tableau d'objets d'apres la doc il faut binder avec l'attribut "key" -->
+            <!-- <li v-for="variant in variants" :key="variant.id">{{ variant.color }}</li>
+        </ul> -->
+
+        <!-- gestion d'evenements -->
+        <!-- <div class="cart">panier ({{ cart }})</div>
+        <button class="button" @click= "Ajouter" >Ajouter au panier</button>
+        <button v-if="cart>0" @click= "Supprimer" >Supprimer au panier</button> -->
+        <img v-bind:src="image2"  alt="image">
+        <div v-for="variant2 in variants2" :key="variant2.id" @mouseover="updateImage(variant2.image2)">
+            {{ variant2.color }}
+        </div>
+
+
+    </div>
+
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script>
+            const app = Vue.createApp({
+                data(){
+                    return {
+                        titre: 'Bonjour a vous',
+                        image: './img/phare.jpg',
+                        image2: '',
+                        inStock: true,
+                        model: '',
+                        inventaire: 1,
+                        details: ['60% coton', '30% laine', '10% polyester'],
+                        variants: [
+                            {id: 2234, color: 'Bleu'},
+                            {id: 2235, color: 'Rouge'},
+                            {id: 2236, color: 'Noir'}
+                        ],
+                        cart: 0,
+                        variants2: [
+                            {id:1,  color: 'bleu', image2 : './img/phare.jpg'},
+                            {id:2,  color: 'rouge', image2 : './img/ville.jpg'},
+                            
+                        ]
+                    }
+                },
+                methods: {
+                    Ajouter(){
+                        this.cart += 1
+                    },
+                    Supprimer(){
+                        this.cart -= 1
+                    },
+                    updateImage(variantImage2){
+                        this.image2 = variantImage2
+                    }
+
+              }
+                
+            });
+
+            app.mount('#app');
+        
+        </script>
+    
+</body>
+</html>
