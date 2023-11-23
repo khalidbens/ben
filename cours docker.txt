@@ -1,0 +1,45 @@
+cours docker 
+
+pour creer un contenair
+
+run --rm(supprimer une fois qu'on arreter ) -p( preciser le port ) 8080:80 php:8.2-apache
+
+controle C pour pour arreter le serveur et sa liaison avec le terminal
+
+-d cest pour pour pas lié le serveur au terminal meme si jetais le pc le serveur tourne toujour
+
+creation de conteneur qui gere du php:
+
+sur le terminal vscode
+PS C:\Users\agoun\OneDrive\Bureau\cours\05-docker\01-dev> docker run -d -p 8080:80 -v ${PWD}:/var/www/html --exempleWeb php:8.2-apache
+
+sur invite de commande:
+il faut juste remplacer {PWD} par %cd%
+
+docker exec -it exemple bash permet d'executer une commande et la commande et bash
+
+root@24d3fc8c69bd:/var/www/html# docker-php-ext-install pdo_mysql
+
+rajout d'extension a php mysql
+
+rajout extension type6-dev
+root@24d3fc8c69bd:/var/www/html# apt install -y libfreetype6-dev (-y cest une commande pour forcer l'installation)
+
+installation bibliotheque
+
+config:
+root@24d3fc8c69bd:/var/www/html# docker-php-ext-configu
+re( nom de la commande) gd(nom de la bibliotheque) --with-freetype=/usr/include/freetype2/
+install:
+root@24d3fc8c69bd:/var/www/html# docker-php-ext-installgd
+
+retrouver le nom de notre conaineur:
+
+docker ps
+
+creation d'un nouveau conteanaire et sa liasion et nom de l'image qui va etre telecharger qui s'appelle mariadb
+PS C:\Users\agoun\OneDrive\Bureau\cours\05-docker\01-dev> docker run --name firstMySQL --network firstnetwork -p 3307(port qui peut etre changer ):3006(port qui ne peut etre changer) -e MARIADB_ROOT_PASSWORD=root -d mariadb
+
+
+
+
