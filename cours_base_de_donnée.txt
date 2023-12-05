@@ -1,0 +1,8 @@
+creation d'une base de donnée:
+
+exemple prof: mcd, mld, mpd
+
+revoir aussi one to one, one to many, many to one, many to many.
+
+
+

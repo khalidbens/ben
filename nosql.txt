@@ -1,0 +1,76 @@
+nosql:
+
+connexion cmd:
+docker exec -it serverMongo851 bash
+
+gestionnaire base de donnée:
+mongosh -u root -p, mot de passe "root"
+
+creer nouvelle utilisateur:
+base de donnée: use admin
+
+creation: 
+db.createUser({user:"Maurice", pwd:"password", roles:[{role:"root",db:"admin"}]})db
+modification proprieté:db.updateUser("Maurice", {pwd:"chaussette"})
+
+voir tout les utilisateur:db.getUser
+
+creation base de donnée:
+
+1- use myFirstBDD
+2-db.dropDatabase() supression mais toujours apparent 
+
+creation de connexion:
+
+1-db.createCollection("users");
+
+ajouter document dans une connexion:
+db.users.insertOne({username:"Charles", email:"ch@gmail.com"})
+
+voir tous les utilisateur avec le mail ciblé avec une regex:
+db.users.find({$or:[{username:"Thomas"},{email:/gmail.com$/}]})
+
+modification (rajout de propriété au fruit:) 
+db.users.updateOne({fruit:"pomme"},{$set:{username:"jean"}})
+
+
+
+ATTENTION A LA DIIF DE SQL IL INSERT NIMPORTE QUOI EXEMPLE:
+db.users.insertOne({fruit:"pomme", couleur:"rouge"})
+
+inserer plusieurs element sous forme de tableau:
+- db.users;insertMany
+
+vzriction age: db.users.find({age:{$lt:18}) ( voir sur internet ) ( exemple : eg = egale , lt= plus petit ...)
+
+pour voir plusieur utilisateur:
+db.users.find({username:{$nin:["pierre","Thomas"]}})
+
+pourvoir plusieurs utilsateurs logique:
+
+
+suppresion d'un objet:
+db.users.deleteOne({fruit:"pomme"})
+
+faire un export:
+
+mongodump -u root et mot de passe.
+
+faire un import:
+mongorestore -u root
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

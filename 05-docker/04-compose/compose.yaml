@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    container_name: monSuperServeurApache
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - SUPER_ENVIRONEMENT_VARIABLE=Mon Super Site
+    depends_on:
+      - mysql
+  mysql:
+    image: mariadb
+    container_name: monSuperServeurMariaDB
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql.sql:/docker-entrypoint-initdb.d/mysql.sql
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: serveurPhpMyAdmin
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+
+

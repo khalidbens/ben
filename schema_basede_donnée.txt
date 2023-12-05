@@ -1,0 +1,1 @@
+schema base de donnée : 0:3 ce sont des cardinaux 

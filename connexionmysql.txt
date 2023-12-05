@@ -1,0 +1,242 @@
+connexion mysql mariadb ( gestionnaire base de donnée
+
+connection a linvite de commande de notre containaire puis connexion a notre gestionnaire de base de donnée
+
+1-docker exec -it fis
+2- mariadb -u root -p : mot de passe = root
+
+utilisation de la base de donnée
+1- USE fistBDD
+
+creation d'un utilisateur:
+
+1- CREATE USER "khalid"@"localhost" IDENTIFIED BY "afci" ; 
+
+ autorisation de droit pour l'utilisateur
+
+1- GRANT ALL PRIVILEGES ON * . * TO "khalid@localhost";
+2 - validation de changement de droit: FLUSH PRIVILEGES;
+
+pour retirer le droit de privileges: REVOKE DELETE ON * . * FROM "Khalid@localhost";
+
+pour retourner sur ROOT:
+1- quit
+2- mariadb -u root -p
+
+voir les droits q'uon a donner a un utilisateur.
+
+1- REVOIR
+
+changer le mot de passe d'un utilisateur
+1- ALTER USER "Khalid@localhost" IDENTIFIED BY " manger ";
+
+pour supprimer l'utilisateur:
+
+1- DROP USER "Khalid@localhost";
+
+creation base de donnee
+1- CREATE DATA BASE "nom de la base de donnée";
+
+voir la liste des bases de donnée:
+
+1-SHOW DATABASES;
+
+supprimer une base de donnée
+
+1- DROP DATABASE fistBDD
+
+
+
+creation de table
+1-CREATE TABLE users ( id int, username varchar(50)...)
+voir comment a été creer la table: SHOW CREATE TABLE users; ( plan de construction )
+voir toutes les table dans la base de donnees: SHOW TABLES;
+
+efaccer table:
+1- DROP TABLE users;
+2- recreation de table avec plus de detail: CREATE TABLE users(id int NOT NULL AUTO_INCREMENT, username varchar(50) NOT NULL, email varchar(255) NOT NULL, password text NOT NULL, active bool DEFAULT 0, createdAt datetime DEFAULT CURRENT_DATE(), PRIMARY KEY (id), UNIQUE(id), UNIQUE(email));
+modification de table:
+1-ALTER TABLE users MODIFY COLUMN createdAt datetime DEFAULT CURRENT_TIMESTAMP;
+ajouter une colonne:
+ALTER TABLE users ADD(ajouter) birthday date NOT NULL; ou suppression de colonne si changement d'avis:ALTER TABLE users DROP COLUMN birthday;
+
+
+
+bonus : 
+
+Varchar: nombre max de caractere par exemple varchar( 250 ) ( longueur variable )
+char: nombre strict d'utilisation par exemple (8) ( obliger d'utiliser 8 caractere ) ( longueur fix )
+int: ( lire un nombre entier)
+text: pour pas de limitation de caractere
+CURRENT_DATE est une fonction qui donne la date actuel
+
+
+insertion de donné dans la base de donné et dans la table users
+1-INSERT INTO users (username, email, password) VALUES ('Maurice', 'mo@gmail.com', 'chaussette');
+
+selection de donnée
+1- SELECT *(toute les colonne) FROM(depuis) users;
+2- colonne selectionne precisement : SELECT username, email FROM users;
+3- preciser depuis quel table viennent les colonne: SELECT users.username, users.email FROM users;
+
+4- injection de donné du prof:
+INSERT INTO users (username, email, password) 
+VALUES 
+('Basile', 'basilic@laposte.net', 'detective'),
+('Cécilius', 'rome@gmail.com', 'salade'),
+('Alcédias', 'alc@gmail.com', 'asdepic'),
+('Florestan', 'flo@outlook.fr', 'restant'),
+('Elzemond', 'elze@laposte.net', 'banane'),
+('Dulmène', 'dudu@outlook.fr', 'banane'),
+('Ildéric', 'deric@gmail.com', 'inspecteur'),
+('Hypolite', 'polite@gmail.com', 'hippopotame'),
+('Guilmée', 'gui@gmail.com', 'guillemet');
+
+selection precise: SELECT username FROM users WHERE id = 8;
+
+exemple: SELECT * from users WHERE email = "alc@gmail.com";
+SELECT username, email FROM users WHERE email LIKE (qui son comme)  "%gmail.com;
+pour en ajouter plusieur de ressemblance: SELECT username, email FROM users WHERE username LIKE "%gmail.com" AND email LIKE "%gmail.com";
+underscore(_) selection de un seul caractere
+un email qui fini par "%gmail" ou "%laposte.net":
+SELECT username, email FROM users WHERE email LIKE "%gmail.com" OR email LIKE "%laposte.com";
+pour refuser "%gmail.com": 
+SELECT username, email FROM users WHERE email NOT LIKE "%gmail.com";
+
+selection tout ceux qui sont pas maurice:
+ SELECT username FROM users WHERE username != "Maurice";
+
+selection de possition:
+SELECT id, username FROM users WHERE id >=5 and id <=8;
+SELECT id, username FROM users WHERE id BETWEEN 5 and 8;
+choix dazns une liste:
+SELECT id, username FROM users WHERE username in ( "maurice", Hypolite", "Florestan");
+
+recuperation de valeur avec IN:
+SELECT username FROM users WHERE password IS NULL;( si la colonne est null)
+
+trier les resulat :
+SELECT id, username, createdAt FROM users ORDER BY  createadAt;
+selection par ordre de date de creation
+SELECT id, username FROM users ORDER BY createdAt; 
+SELECT id, username FROM users ORDER BY createdAt DESC; ( ordre descroissant)
+
+dabord par ordre des active ( dabord dans les 1 (alphabetique) puis zero ( 
+ SELECT username, active FROM users ORDER BY active DESC, username ASC;
+
+recuperer les 5 premier resulat:
+ SELECT username, id FROM users LIMIT 5;
+
+JE SAUTE les 3 premier reultat a la limite de 5:
+SELECT username, id FROM users LIMIT 5 OFFSET 3;
+
+supression du contenu de la table attention !: DELETE FROM users;
+donc pour ciblé un contenu:  DELETE FROM users WHERE username = "Maurice";
+
+modifier un contenu de la table ATTENTION!:UPDATE users SET ACTIVE = 1, createdAt = CURRENT_TIMESTAMP;
+cibler la modification: UPDATE users SET ACTIVE = 1, createdAt = CURRENT_TIMESTAMP WHERE email LIKE "%gmail.com";
+
+bonus2:
+slection pour voir les mot de passe:SELECT password FROM users;
+recuperation de tout les mot de passe qui sont different:SELECT DISTINCT password FROM users;
+
+fonction pour voir combien j'ai de id: SELECT COUNT(id) FROM users;
+
+voir combien d'utilisateur son en gmail:SELECT COUNT(id) FROM users WHERE email LIKE "%gmail%";
+
+renomé une table: 
+SELECT u.username from users u;
+
+pour avoir la moyenne sur les nombre de tous mes id:
+SELECT AVG(id) from users;
+...voir toutes les fonction sur internet!
+
+voir sur internet comment changer la valeur de ma colonne si c'est un float... avec CAST
+
+suite du cours:
+
+groupe:
+
+grouper les meme colonne gmail :select count(id), (email like "%gmail%") as gmail from users group by gmail;
+
+rajout de condition dans le goup by: 
+select count(id), (email like "%gmail%") as gmail from users group by gmail having count(id) >=5;
+
+creation nouvelle table:
+CREATE TABLE message (id int NOT NULL AUTO_INCREMENT, content text NOT NULL, createdAt datetime DEFAULT CURRENT_TIMESTAMP, UserId int NOT NULL, PRIMARY KEY(id), UNIQUE(id), CONSTRAINT fk_userID FOREIGN KEY(UserId) REFERENCES users(id));
+
+Ce code SQL crée une contrainte de clé étrangère appelée "fk_userID". Cette contrainte spécifie que la colonne "UserId" dans la table actuelle doit faire référence à la colonne "id" dans la table "users". Cela signifie que chaque valeur de la colonne "UserId" doit correspondre à une valeur existante dans la colonne "id" de la table "users".
+
+supression de la clé:
+alter table message drop foreign key fk_userId;
+
+reinsertion de la clé etrange avec une commande en plus "cascade":
+alter table message add constraint fk_userId foreign key (userId) references users(id) on delete cascade on update cascade;
+
+requette plusieurs table lié entre elle( jointure) :
+
+select u.username, m.content, m.createdAt from users u inner join(recuperation ce quil y a en lien) message m on userId =u.id;( avec des alias)
+
+dautre type de jointure:
+
+1-select u.username, m.content, m.createdAt from users u left join message m on userId =u.id; 
+select u.username, m.content, m.createdAt from users u right join message m on userId =u.id; 
+
+2-cross join:
+
+3-excludin join: on garde que ce que est null ( les utilisateur qui n'ont pas de message)
+
+
+faire export base de donnée
+
+1- il faut quitter la base de donneé avec "exit"
+2- mariadb-dump -u root -p fistBDD > sauvegarde.sql exporter le fichier(dans le copntainer)
+3-sortir du containaire 
+il faut le quitter encore avec exit
+
+et l'enregistrer dans le chemin qu'on veut: par exemple ici je suis a la racine et sa me convient de je met point a la fin:docker cp serverMySQL851:sauvegarde.sql .
+
+mariadb et non mariadb-dump
+copier de l'ordinateur vers le contenaire il faut faire l'inverse: docker cp .serverMySQL851:sauvegarde.sql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
