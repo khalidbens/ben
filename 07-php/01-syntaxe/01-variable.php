@@ -209,5 +209,181 @@ echo $x++, "--> $x <br>";
 echo ++$x, "--> $x <br>";
 echo $x--, "--> $x <br>";
 echo --$x, "--> $x <br>";
+
+#---------------------------------------------------------
+echo "<hr><h1>Les tableaux</h1>";
+// Originellemnt un tableau se creait ainsi:
+$a = array("banane", "pomme", "poire");
+// mais maintenant on peut simplement faire:
+$b = ["banane", "pomme", "poire"];
+// pour afficher un tableau, on ne peut pas faire d'echo:
+// echo $a, "<br>";
+var_dump($a);
+// pour selectionner un element d'un tableau, on utilisera l'index de celui ci:
+echo "<br>J'aime la $a[0]!<br>";
+// pour connaitre la taille d'un tableau, on utilisera la fonction count():
+echo count($a), "<br>";
+// pour ajouter un élement a mon tableau:
+$a = $b;
+$a[] = "fraise";
+/*
+    en php les tableaux sont par defaut indexer via des nombres.
+    mais l'on peut creer ce que l'on nomme des tableaux associatifs:
+    c'est a dire un tableau ou les indexes ne sont pas des nombres, mais des strings.
+*/
+$person = ["prenom" => "Arthur", "age" => "Dent"];
+// pour afficher les donnees, on n'utilisera plus les chiffres mais ces strings:
+echo "je suis", $person["prenom"], "et j'ai", $person["age"], "ans.<br>";
+// Biensur les tableaux peuvent etre multidimensionnels:
+$person["loisir"] = ["sport", "lecture"];
+echo '<pre>'.print_r($person,1).'</pre>';
+// pour afficher les donnees d'un tableau de ce genre, on accolera les [] :
+echo $person["loisir"][0], "<br>";
+// pour supprimer un element d'un tableau, on utilisera la fonction unset():
+unset($person["age"]);
+var_dump($person);
+// ce qui ne pose aucun probleme sur un tableau associatif, mais sur un tableau indexe:
+echo "<br>";
+var_dump($a[1]);
+var_dump($a);
+// on se retrouve avec un trou, mais on peut reparer cela soit en reindexant tout dans un nouveau tableau:
+$a = array_values($a);
+var_dump($a);
+echo "<br>";
+/*soit on supprimera un element avec la fonction array_splice()
+    celui ci prendra en premier argument, le tableau, en second l'index a partir duquel supprimer,
+    en troisieme, combien d'element supprimer
+*/
+$a = array_splice($a, 1, 1); // Supprime l'element d'index 1
+var_dump($a);
+echo "<br>";
+// optionnellement on peut ajouter un 4eme argument pour remplacer un element:
+array_splice($b, 1, 1, ["fraise","pamplemousse"]);
+var_dump($b);
+echo "<br>";
+// on pourra fusionner des tableaux avec la fonction array_merge():
+$ab = array_merge($a, $b);
+var_dump($ab);
+echo "<br>";
+// on pourra creer un tableau a partir d'un string avec la fonction explode():
+$tab = explode(";", "banane;orange"); // on peut se servir de n'importe quoi comme seperateur
+var_dump($tab);
+echo "<br>";
+// Pour trier un tableau, on utilisera la fonction sort():
+sort($ab);
+var_dump($ab);
+echo "<br>";
+/*
+    on trouvera aussi:
+    rsort() pour trier dans l'ordre inverse
+    ksort() pour trier par les clés croissant
+    krsort() pour trier par les clés decroissant
+    asort() pour trier par valeur croissante
+    arsort() pour trier par valeur decroissante
+    
+*/
+$person["nom"] = "Dupont";
+var_dump($person);echo "<br>";
+ksort($person);var_dump($person);echo "<br>";
+asort($person);var_dump($person);echo "<br>";
+
+#---------------------------------------------------------
+echo "<hr><h1>Boolean</h1>";
+// les boolean ne peuvent etre que true ou false:
+$t = true;
+$f = false;
+var_dump($t, $f);
+// mais ils peuvent etre obtenu de bien des façons:
+echo "<br> 5<3 : ";
+var_dump(5<3);
+echo "<br> 5>3 : ";
+var_dump(5>3);
+echo "<br> 5==3 : ";
+var_dump(5==3);
+echo "<br> 5!=3 : ";
+var_dump(5!=3);
+echo "<br> 5===3 : ";
+var_dump(5===3);
+echo "<br> 5!==3 : ";
+var_dump(5!==3);
+echo "<br> 5<=3 : ";
+var_dump(5<=3);
+echo "<br> 5>=3 : ";
+var_dump(5>=3);
+
+// il est possible de les combiner:
+echo "<br> (5<3) && (4>2) : ";
+var_dump((5<3) && (4>2));
+// && peut aussi s'ecrire and:
+echo "<br> (5<3) and (4>2) : ";
+var_dump((5<3) and (4>2));
+
+echo "<br> (5<3) || (4>2) : ";
+var_dump((5<3) || (4>2));
+// || peut aussi s'ecrire or:
+echo "<br> (5<3) or (4>2) : ";
+var_dump((5<3) or (4>2));
+
+// celle ci repond "true" si une seule des deux conditions est vraie(true):
+echo "<br> 5<3 xor 4>2 : ";
+var_dump(5<3 xor 4>2);
+
+// "!" permet d'inverser le resultat :
+echo '<br> !$t !$f: ';
+var_dump(!$t, !$f);
+
+#---------------------------------------------------------
+echo "<hr><h1>Les variables Superglobals.</h1>";
+/*
+    certaines variables que l'on nomme superglobals sont accessibles n'importe ou dans votre code php, et defini par defaut.
+
+    $GLOBALS : permet d'acceder aux variables globales.
+    echo '<pre>' .print_r($GLOBALS, 1) . '</pre>';
+
+    $_SERVER : permet d'acceder aux informations du serveur.
+    echo '<pre>' .print_r($_SERVER, 1) . '</pre>';
+
+    $_REQUEST : contient les meme infos que $_GET, $_POST, $_COOKIE et $_FILES entre autre
+    echo '<pre>' .print_r($_REQUEST, 1) . '</pre>';
+
+    $_post : permet d'acceder aux informations POST.
+    echo '<pre>' .print_r($_POST, 1) . '</pre>';
+
+    $_get : CONTIENT  tout ce squi se trouve apres le point d'interrogation dans l'url.
+    echo '<pre>' .print_r($_GET, 1) . '</pre>';
+
+    $_file : contient tout ce qui se trouve dans les fichiers uploader.
+    echo '<pre>' .print_r($_FILES, 1) . '</pre>';
+
+    $_cookie : contient tout ce qui se trouve dans les cookies.
+    echo '<pre>' .print_r($_COOKIE, 1) . '</pre>';
+
+    $_ENV : contient tout ce qui se trouve dans les variables d'environnement.
+    echo '<pre>' .print_r($_ENV, 1) . '</pre>';
+
+    $_SESSION : contient tout ce qui se trouve dans la session.
+    echo '<pre>' .print_r($_SESSION, 1) . '</pre>';
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 
