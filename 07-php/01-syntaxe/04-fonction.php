@@ -121,6 +121,120 @@ function titre2(&$nom)
 }
 titre2($mau);
 echo "voici $mau !<br>";
+#---------------------------------------------------------
+echo "<hr><h1>Recurcivité</h1><hr>";
+/*
+    une fonction recurcive est une fonction qui appelle elle-meme.
+    cela peut provoquer une boucle infinie.
+    ! attention de prevoir une condition de sortie
+*/
+function decompte($n)
+{
+    // action a realiser
+    echo "$n <br>";
+    // condition de sortie
+    if($n <= 0) return;
+    // recursivite
+    decompte(--$n);
+}
+decompte(5);
+#---------------------------------------------------------
+echo "<hr><h1>Typage et Description</h1><hr>";
+/*
+    sur les dernieres version de PHP, il est possible, conseillé bien que non obligatoire,
+    de typer ses arguments et valeur de retour ainsi que de decrire les fonction.
+
+    faire cici ne changera pas le fonctionnement de votre code,
+    mais ameliorera sa lisibilité si vous ou quelqu'un d'autre souhaite le reutiliser plus tard.
+*/
+
+
+// ! description en faisant " /** " 
+/**
+ * cette fonction retourne la presentation du personnage
+ * 
+ *Les arguments sont les information du personnage
+ *
+ * @param string $nom nom du personnage
+ * @param integer $age age du personnage
+ * @param boolean $travail le personnage travail t-il ?
+ * @return string phrase de presentation
+ */
+function presentation(string $nom, int $age, bool $travail): string
+{
+    return "je m'appelle $nom, j'ai $age ans. Je ".
+    ($travail ? "travaille" : "ne travaille pas");
+}
+echo presentation("Maurice", 54, true);
+
+#---------------------------------------------------------
+echo "<hr><h1>Portée des variables et variable static</h1><hr>";
+/*
+    une variable declarée hors dune fonction n'est pas disponible dans celle ci.
+    si on souhaite utiliser une variable dans la fonction, 
+    elle devra soit etre passé en argument,
+    soit recuperé via le mot clef "global".
+    celui ci permet d'indiquer que la variable que l'on souhaite
+    utilisé a été declaré hors de toute fonction.
+*/
+$z = 5;
+function showZ()
+{
+    global $z;
+    echo $z,"<br>";
+}
+showZ();
+/*
+    une variable precedé du mot " static" ne sera pas reinitialisee a chaque appelle de la fonction
+    sa valeur sera donc sauvegardé entre chaque appelle de la fonction
+*/
+function compte()
+{
+    $a = 0;
+    static$b = 0; 
+    echo "a : $a <br> b : $b <br>";
+    $a++;
+    $b++;
+}
+compte();
+compte();
+compte();
+#---------------------------------------------------------
+echo "<hr><h1>Fonction anonyme, fleché et callback</h1><hr>";
+/*
+    bien que rarement utilisé, il est possible de declarer des fonctions anonyme et fleché en PHP.
+    une fonction anonyme est une fonction qui ne porte pas de nom, elle sera rangé dans une variable ou utilisé encallback 
+    une fonction fleché est une fonction qui porte un nom, elle sera utilisée directement(version raccourcie)
+    un callback est une fonction passé en argument qui sera appelé par la fonction qui la recoit.
+*/
+/**
+ * cette fonction prend un tableau et utilise la fonction donnée en callback pour afficher le contenu
+ *
+ * @param array $arr tableau de donnée
+ * @param callable $func fontion d'affichage
+ * @return void
+ */
+function dump(array $arr, callable $func): void
+{
+    foreach($arr as $a)
+    {
+        $func($a);
+        echo "<br>";
+    }
+}
+$tab = ["sandwitch", "pizza", "salade"];
+// je donne en second argument une fonction anonyme
+dump($tab, function($x){echo $x;});
+// je donne en second argument une fonction flechee
+dump($tab, fn($x)=>var_dump($x));
+
+// je range ma fonction anonyme dans une variable:
+$superFonction = function($x){print $x;};
+// je donne en callback ma variable contenant une fonction.
+dump($tab, $superFonction);
+
+
+
 
 
 ?>
