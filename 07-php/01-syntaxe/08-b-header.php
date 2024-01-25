@@ -12,9 +12,9 @@
 */
 header("refresh: 5; url=08-b-header.php");
 $title = "Header Page 2";
-require "../_header.php";
+require __DIR__."/../_header.php";
 
 
 echo "<br> ceci est ma page 2";
-require "../_footer.php";
+require __DIR__."/../_footer.php";
 ?>

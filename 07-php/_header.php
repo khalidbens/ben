@@ -11,7 +11,7 @@
     <!-- <link rel="stylesheet" href="./ressources/style/style.css"> -->
 	<!--Le problème avec un lien relatif c'est qu'il ne fonctionnera plus si on l'inclu dans un fichier se trouvant ailleurs.
 		On préfèrera alors utiliser un chemin absolu depuis la racine de notre serveur.-->
-	<link rel="stylesheet" href="../style.css">
+	<link rel="stylesheet" href="/style.css">
     <script src="/ressources/script/script.js" defer></script>
 </head>
 <body>
@@ -21,3 +21,13 @@
     <!-- On ouvre le body ici mais on ne le ferme pas, il sera fermé
     dans le footer. -->
     <main class="<?php echo $mainClass??"" ?>">
+        <!-- Si j'ai un message flash en session alors je l'affiche, puis je le supprime de la session -->
+        <?php if(isset($_SESSION['flash'])): ?>
+            <div class="flash">
+                <?= $_SESSION['flash'] ?>
+            </div>
+        <?php 
+            unset($_SESSION['flash']);
+        endif;
+        
+        ?>

@@ -1,6 +1,6 @@
 <?php 
 $title = "Gestion des dates";
-require "../_header.php";
+require __DIR__."/../_header.php";
 
 // Si on souhaite utiliser le timestamp, on pourra utiliser la fonction:
 echo time(), "<br>";
@@ -84,5 +84,5 @@ echo date("c"), "<br>";
 echo date("r"), "<br>";
 
 
-require "../_footer.php";
+require __DIR__."/../_footer.php";
 ?>

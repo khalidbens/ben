@@ -26,9 +26,9 @@ if(rand(0,100) < 50) {
     */
 }
 $title = "Gestion des headers de requete";
-require "../_header.php";
+require __DIR__."/../_header.php";
 // Sans parametre, on affiche le code de la page:
 echo http_response_code();
 echo "<br> ceci est ma page 1";
-require "../_footer.php";
+require __DIR__."/../_footer.php";
 ?>

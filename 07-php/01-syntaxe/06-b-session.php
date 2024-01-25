@@ -64,8 +64,8 @@ setcookie("PHPSESSID", "", time()-3600);
     Pour cela on utilisera "session_name()"
 */
 $title = "session page 2";
-require "../_header.php";
+require __DIR__."/../_header.php";
 echo $message ??"";
-echo "<a href = './06-a-session.php'>retour</a>";
-require "../_footer.php";
+echo "<a href='/session/a'>Page 1</a>";
+require __DIR__."/../_footer.php";
 ?>

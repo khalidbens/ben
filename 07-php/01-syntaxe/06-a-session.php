@@ -15,7 +15,7 @@ session_start();
 
 
 $title = "session page 1";
-require "../_header.php";
+require __DIR__."/../_header.php";
 
 // On peut retrouver l'id de la session dans les cookies ou avec la fonction "session_id()"
 var_dump($_COOKIE, session_id());
@@ -31,5 +31,5 @@ $_SESSION["username"] = "Arthur";
 ?>
 <a href="./06-b-session.php">page 2</a>
 <?php
-require "../_footer.php";
+require __DIR__."/../_footer.php";
 ?>

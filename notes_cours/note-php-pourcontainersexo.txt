@@ -1,0 +1,2 @@
+creation d'un conteners pour faire des exos en php sans utiliser le conteners deja utiliser pour les cours:
+docker run -d -p 8081:80 -v .:/var/www/html php:8.2-apache
